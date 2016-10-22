@@ -1,17 +1,23 @@
 from flask import Flask, render_template, flash, url_for, redirect, request
+from datetime import datetime
 import bcrypt
-from flask_login import LoginManager, login_user, logout_user
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
 import os
 
 app = Flask(__name__)
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = "users.login"
+login_manager.login_view = "login"
 app.secret_key = "this is the most secret key you'll ever see"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 
 db = SQLAlchemy(app)
+
+ops = db.Table('ops',
+    db.Column('opportunity', db.Integer, db.ForeignKey('opportunity.id')),
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
+)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -55,6 +61,26 @@ class User(db.Model):
           return True
         else:
           return False
+
+class Opportunity(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    hours = db.Column(db.Integer)
+    badge_name = db.Column(db.String(100))
+    badge_image = db.Column(db.String(200))
+    name = db.Column(db.String(100))
+    description = db.Column(db.String(1000))
+    date = db.Column(db.String(1000))
+
+    def __init__(self, name, description, hours, date, badge_name, badge_image):
+        self.name = name
+        self.description = description
+        self.hours = hours
+        self.date = date
+        self.badge_name = badge_name
+        self.badge_image = badge_image
+
+    def __repr__(self):
+        return '<Opportunity %r>' % self.name
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -101,3 +127,38 @@ def logout():
 @app.route('/', methods=['GET', 'POST'])
 def home():
     return render_template("home.html")
+
+@app.route('/admin', methods=['GET', 'POST'])
+@login_required
+def admin():
+    user = current_user
+
+    users = User.query.all()
+    opportunities = Opportunity.query.all()
+
+    if user.is_admin():
+        if request.method == 'POST':
+            r = request.form
+            opportunity = Opportunity(r['name2'], r['description'], int(r['hours']), r['date'], r['badgename'], r['badgeimage'])
+            db.session.add(opportunity)
+            db.session.commit()
+            flash("Opportunity added.")
+            return redirect(url_for("admin"))
+        else:
+            return render_template("admin.html", users=users, opportunities=opportunities)
+    else:
+        flash("You are not an admin.")
+        return redirect(url_for("home"))
+
+@app.route('/admin/delete/<int:opp_id>')
+def delete(opp_id):
+    user = current_user
+
+    if user.is_admin():
+        opportunity = Opportunity.query.filter_by(id=opp_id).first()
+        db.session.delete(opportunity)
+        db.session.commit()
+        return redirect(url_for("admin"))
+    else:
+        flash("You are not an admin.")
+        return redirect(url_for("home"))

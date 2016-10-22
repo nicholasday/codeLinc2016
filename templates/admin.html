@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Admin</h1>
+<form method=post>
+    Name:
+    <input type=text name="name2">
+    Description:
+    <input type=text name="description">
+    Hours:
+    <input type=text name="hours">
+    Date:
+    <input type=text name="date">
+    Badge Name:
+    <input type=text name="badgename">
+    Badge Link:
+    <input type=text name="badgeimage">
+    <input type="submit" value="Submit">
+</form>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+    </tr>
+{% for user in users %}
+<tr>
+    <td>{{ user.id }}</td>
+    <td>{{ user.firstname }}</td>
+    <td>{{ user.lastname }}</td>
+    <td>{{ user.email }}</td>
+</tr>
+{% endfor %}
+</table>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Hours</th>
+        <th>Date</th>
+        <th>Badge Name</th>
+        <th>Badge Image</th>
+    </tr>
+{% for opportunity in opportunities %}
+<tr>
+    <td>{{ opportunity.id }}</td>
+    <td>{{ opportunity.name }}</td>
+    <td>{{ opportunity.description }}</td>
+    <td>{{ opportunity.hours }}</td>
+    <td>{{ opportunity.date }}</td>
+    <td>{{ opportunity.badge_name }}</td>
+    <td>{{ opportunity.badge_image }}</td>
+    <td><a href="/admin/delete/{{ opportunity.id }}">delete</a></td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
