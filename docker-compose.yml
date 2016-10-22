@@ -1,0 +1,20 @@
+version: '2'
+volumes:
+  pdb:
+services:
+  web:
+    build: .
+    ports:
+     - "3031:3031"
+    depends_on:
+     - db
+    env_file: 
+     - .env
+    volumes:
+     - .:/codelinc2016
+  db:
+    image: postgres:9.5.4
+    env_file:
+     - .env
+    volumes:
+     - pdb:/var/lib/postgresql/data
