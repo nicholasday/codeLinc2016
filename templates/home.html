@@ -4,6 +4,10 @@
  {% if current_user.is_authenticated %}
   Hi {{ current_user.firstname }}!
 
+  <h1>Your Score: {{ score }}</h1>
+  <h1># of Opportunities Completed: {{ badges_opportunity|length }}</h1>
+  <h1># of Badges: {{ badges|length }}</h1>
+  <h1># of Hours: {{ hours }}</h1>
   <h1>Badges</h1>
   {% for opportunity in badges %}
   {{ opportunity.badge_name }} <img src="{{ opportunity.badge_image }}" />

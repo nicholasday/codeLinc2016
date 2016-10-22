@@ -84,6 +84,14 @@ class Opportunity(db.Model):
     def __repr__(self):
         return '<Opportunity %r>' % self.name
 
+class Opportunity2():
+    badge_name = ""
+    badge_image = ""
+
+    def __init__(self, badge_name, badge_image):
+        self.badge_name = badge_name
+        self.badge_image = badge_image
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.filter_by(id=user_id).first()
@@ -130,12 +138,23 @@ def logout():
 def home():
     user = current_user
     if user.is_authenticated():
-        badges = []
+        badges_opportunity = []
+        hours = 0
         for opportunity in user.opportunities:
-            badges.append(opportunity)
+            badges_opportunity.append(opportunity)
+            hours += opportunity.hours
+
+        badges = badges_opportunity[:]
+        
+        if hours > 10:
+            badges.append(Opportunity2("10 Hours!", "no link"))
+        if hours > 20:
+            badges.append(Opportunity2("20 Hours!", "no link"))
 
         opportunities = Opportunity.query.all()
-    return render_template("home.html", badges=badges, opportunities=opportunities)
+
+        score = 5 * len(badges_opportunity) + 10 * hours + 20 * len(badges)
+    return render_template("home.html", score=score, badges_opportunity=badges_opportunity, hours=hours, badges=badges, opportunities=opportunities)
 
 @app.route('/complete/<int:opp_id>')
 def complete(opp_id):
