@@ -1,5 +1,5 @@
 from flask import Flask, render_template, flash, url_for, redirect, request
-from datetime import datetime
+import datetime
 import bcrypt
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
@@ -25,6 +25,8 @@ class User(db.Model):
     lastname = db.Column(db.String(500))
     email = db.Column(db.String(120), unique=True)
     pw_hash = db.Column(db.String(500))
+    opportunities = db.relationship('Opportunity', secondary=ops,
+        backref=db.backref('users', lazy='dynamic'))
 
     def __init__(self, firstname, lastname, email, password):
         self.firstname = firstname
@@ -69,13 +71,13 @@ class Opportunity(db.Model):
     badge_image = db.Column(db.String(200))
     name = db.Column(db.String(100))
     description = db.Column(db.String(1000))
-    date = db.Column(db.String(1000))
+    date = db.Column(db.DateTime)
 
     def __init__(self, name, description, hours, date, badge_name, badge_image):
         self.name = name
         self.description = description
         self.hours = hours
-        self.date = date
+        self.date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
         self.badge_name = badge_name
         self.badge_image = badge_image
 
@@ -126,7 +128,25 @@ def logout():
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template("home.html")
+    user = current_user
+    if user.is_authenticated():
+        badges = []
+        for opportunity in user.opportunities:
+            badges.append(opportunity)
+
+        opportunities = Opportunity.query.all()
+    return render_template("home.html", badges=badges, opportunities=opportunities)
+
+@app.route('/complete/<int:opp_id>')
+def complete(opp_id):
+    user = current_user
+    opportunity = Opportunity.query.filter_by(id=opp_id).first()
+    for opportunity2 in user.opportunities:
+        if opportunity2 == opportunity:
+            user.opportunities.remove(opportunity)
+    user.opportunities.append(opportunity)
+    db.session.commit()
+    return redirect(url_for("home"))
 
 @app.route('/admin', methods=['GET', 'POST'])
 @login_required
@@ -135,6 +155,7 @@ def admin():
 
     users = User.query.all()
     opportunities = Opportunity.query.all()
+    today = datetime.date.today()
 
     if user.is_admin():
         if request.method == 'POST':
@@ -145,7 +166,7 @@ def admin():
             flash("Opportunity added.")
             return redirect(url_for("admin"))
         else:
-            return render_template("admin.html", users=users, opportunities=opportunities)
+            return render_template("admin.html", today=today, users=users, opportunities=opportunities)
     else:
         flash("You are not an admin.")
         return redirect(url_for("home"))
