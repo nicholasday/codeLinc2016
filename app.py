@@ -141,10 +141,13 @@ def home():
 def complete(opp_id):
     user = current_user
     opportunity = Opportunity.query.filter_by(id=opp_id).first()
-    for opportunity2 in user.opportunities:
-        if opportunity2 == opportunity:
+    dontadd = False
+    for opportunityone in user.opportunities:
+        if opportunityone == opportunity:
+            dontadd = True
             user.opportunities.remove(opportunity)
-    user.opportunities.append(opportunity)
+    if dontadd == False:
+        user.opportunities.append(opportunity)
     db.session.commit()
     return redirect(url_for("home"))
 
