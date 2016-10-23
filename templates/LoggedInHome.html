@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>Dashboard</title>
 
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -46,12 +46,12 @@
           <img src="../static/images/ja_favicon.png" style="width:42px; height: 42px; float: left;"/><a class="navbar-brand" href="#" style="color: white;">Inspire JA Triad</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right" >
 
-              <li><a href="#">Welcome, {{ current_user.firstname }} {{
+              <li><a href="#" style="color: white;">Welcome, {{ current_user.firstname }} {{
                       current_user.lastname}}</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="/logout">Sign Out</a></li>
+            <li><a href="#" style="color: white;">Profile</a></li>
+            <li><a href="/logout" style="color: white;">Sign Out</a></li>
           </ul>
         </div>
       </div>
@@ -61,16 +61,17 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar" style="background: #D3D3D3;">
           <ul class="nav nav-sidebar">
-            <li class="active" style="text-align: center;"><a href="#">Your Stats<span class="sr-only">(current)</span></a></li>
-            <span style="-moz-column-count: 2;-moz-column-gap: 50%;-webkit-column-count: 2;-webkit-column-gap: 50%;column-count: 2;column-gap: 50%;"><li style="width: 75px; height: 50px;"><a href="#">Varun</a></li><li style="width: 75px; height: 50px;><a href="#">2300</a></li></span>
-            <li><a href="#">Nick&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2100</a></li>
-            <li><a href="#">Bob&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2000</a></li>
+            <li class="active" style="text-align: center;"><a href="#" style="font-weight: bold;">Your Stats<span class="sr-only">(current)</span></a></li>
+            <li class="text-center"><a href="#" style="font-weight: bold;"><b>Hours Completed: 70</a></li><br>
+            <li class="text-center"><a href="#" style="font-weight: bold;">Opportunities Completed: 12</a></li><br>
+            <li class="text-center"><a href="#" style="font-weight: bold;">Score: 2300</a></li><br>
+            <li class="text-center"><a href="#" style="font-weight: bold;">Leaderboard Ranking: #1</a></li><br>          
           </ul>
           <ul class="nav nav-sidebar">
             <li class="active" style="text-align: center;"><a href="#">JA Triad Leaderboard<span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Varun&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2300</a></li>
-            <li><a href="#">Nick&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2100</a></li>
-            <li><a href="#">Bob&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2000</a></li>
+            <li class="text-center"><a href="#" style="font-weight: bold;">Varun - 2300</a></li>
+            <li class="text-center"><a href="#">Nick - 2100</a></li>
+            <li class="text-center"><a href="#">Bob - 2000</a></li>
           </ul>
         </div>
 
@@ -86,14 +87,6 @@
           <h1 class="page-header">Volunteer Dashboard</h1>
 
           <div class="row placeholders">
-
-  {% for opportunity in badges %}
-            <div class="col-xs-6 col-sm-3 placeholder">
-                <img src="{{opportunity.badge_image}}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>{{ opportunity.badge_name }}</h4>
-              <span class="text-muted"></span>
-            </div>
-  {% endfor %}
 
             <div class="col-xs-6 col-sm-3 placeholder">
               <img src="..\static\images\bluebadge2.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
