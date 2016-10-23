@@ -131,21 +131,41 @@
               </thead>
               <tbody>
                   {% for opportunity in opportunities %}
-                      {% if opportunity.date.date() < today %}
-                   {{ opportunity.userops.verified }}
-                   {% if opportunity.userops.verified == true %}
-                  <tr class=".success">
-                    {% else %}
-                    <tr>
-                        {% endif %}
-                      <td>{{ opportunity.date.strftime("%m/%d/%Y") }}</td>
-                      <td>{{ opportunity.name }}</td>
-                      <td>{{ opportunity.time }}</td>
-                      <td>{{ opportunity.location }}</td>
-                      <td><a href="/complete/{{ opportunity.id}}">Sign-up</a></td>
-                   <tr>
-                       {% endif %}
-                    {% endfor %}
+                      {% if opportunity.date.date() >= today %}
+                      {% set vars = {'foo': True} %}
+                          {% for userop in opportunity.userops %}
+                              {% if userop.user == current_user %}
+                                    {% if vars.update({'foo': False}) %} {% endif %}
+                                  {% if userop.verified == true %}
+                                      <tr class="success">
+                                  {% else %}
+                                      <tr class="info">
+                                  {% endif %}
+                                  <td>{{ opportunity.date.strftime("%m/%d/%Y") }}</td>
+                                  <td><a href="/opportunity/{{ opportunity.id }}">{{ opportunity.name }}</a></td>
+                                  <td>{{ opportunity.time }}</td>
+                                  <td>{{ opportunity.location }}</td>
+                                  {% if userop.verified == true %}
+                                  <td></td>
+                                  {% endif %}
+                                  {% if userop.verified == false %}
+                                  <td><a href="/complete/{{
+                                          opportunity.id}}">Remove Sign-up</a></td>
+                                  {% endif %}
+                                  <tr>
+                              {% endif %}
+                          {% endfor %}
+                          {% if vars.foo %}
+                                <tr>
+                                  <td>{{ opportunity.date.strftime("%m/%d/%Y") }}</td>
+                                  <td><a href="/opportunity/{{ opportunity.id }}">{{ opportunity.name }}</a></td>
+                                  <td>{{ opportunity.time }}</td>
+                                  <td>{{ opportunity.location }}</td>
+                                  <td><a href="/complete/{{ opportunity.id}}">Sign-up</a></td>
+                                  <tr>
+                          {% endif %}
+                      {% endif %}
+                  {% endfor %}
                 <tr>
                   <td>11/1/2016</td>
                   <td>JA Economics for Success</td>
@@ -176,24 +196,46 @@
                   <th>Opportunity</th>
                   <th>Time</th>
                   <th>Location</th>
+                  <th>Sign-up</th>
                 </tr>
               </thead>
               <tbody>
                   {% for opportunity in opportunities %}
                       {% if opportunity.date.date() < today %}
-                   {% if opportunity.userops.verified == true %}
-                  <tr class=".success">
-                    {% else %}
-                    <tr>
-                        {% endif %}
-                      <td>{{ opportunity.date.strftime("%m/%d/%Y") }}</td>
-                      <td>{{ opportunity.name }}</td>
-                      <td>{{ opportunity.time }}</td>
-                      <td>{{ opportunity.location }}</td>
-                      <td><a href="/complete/{{ opportunity.id}}">Sign-up</a></td>
-                   <tr>
-                       {% endif %}
-                    {% endfor %}
+                      {% set vars = {'foo': True} %}
+                          {% for userop in opportunity.userops %}
+                              {% if userop.user == current_user %}
+                                    {% if vars.update({'foo': False}) %} {% endif %}
+                                  {% if userop.verified == true %}
+                                      <tr class="success">
+                                  {% else %}
+                                      <tr class="info">
+                                  {% endif %}
+                                  <td>{{ opportunity.date.strftime("%m/%d/%Y") }}</td>
+                                  <td><a href="/opportunity/{{ opportunity.id }}">{{ opportunity.name }}</a></td>
+                                  <td>{{ opportunity.time }}</td>
+                                  <td>{{ opportunity.location }}</td>
+                                  {% if userop.verified == true %}
+                                  <td></td>
+                                  {% endif %}
+                                  {% if userop.verified == false %}
+                                  <td><a href="/complete/{{
+                                          opportunity.id}}">Remove Sign-up</a></td>
+                                  {% endif %}
+                                  <tr>
+                              {% endif %}
+                          {% endfor %}
+                          {% if vars.foo %}
+                                <tr>
+                                  <td>{{ opportunity.date.strftime("%m/%d/%Y") }}</td>
+                                  <td><a href="/opportunity/{{ opportunity.id }}">{{ opportunity.name }}</a></td>
+                                  <td>{{ opportunity.time }}</td>
+                                  <td>{{ opportunity.location }}</td>
+                                  <td><a href="/complete/{{ opportunity.id}}">Sign-up</a></td>
+                                  <tr>
+                          {% endif %}
+                      {% endif %}
+                  {% endfor %}
                 <tr>
                   <td>10/17/2016</td>
                   <td>JA Economics for Success</td>
@@ -217,7 +259,9 @@
           </div>
         </div>
       </div>
+
     </div>
+                                
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

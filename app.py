@@ -168,6 +168,11 @@ def logout():
     logout_user()
     return redirect(url_for("home"))
 
+@app.route('/opportunity/<int:opp_id>')
+def opportunity_view(opp_id):
+    opportunity = Opportunity.query.filter_by(id=opp_id).first()
+    return render_template("opportunity.html", opportunity=opportunity)
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     user = current_user
