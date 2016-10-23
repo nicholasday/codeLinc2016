@@ -244,7 +244,7 @@ def admin():
             flash("Opportunity added.")
             return redirect(url_for("admin"))
         else:
-            return render_template("admin.html", today=today, users=users, opportunities=opportunities)
+            return render_template("unconnectedadmin.html", today=today, users=users, opportunities=opportunities)
     else:
         flash("You are not an admin.")
         return redirect(url_for("home"))

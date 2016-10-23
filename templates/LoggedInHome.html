@@ -87,6 +87,12 @@
           <h1 class="page-header">Volunteer Dashboard</h1>
 
           <div class="row placeholders">
+          {% for opportunity in badges %}
+            <div class="col-xs-6 col-sm-3 placeholder">
+                <img src="{{ opportunity.badge_image }}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                <h4>{{ opportunity.badge_name}}</h4>
+            </div>
+            {% endfor %}
 
             <div class="col-xs-6 col-sm-3 placeholder">
               <img src="..\static\images\bluebadge2.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">

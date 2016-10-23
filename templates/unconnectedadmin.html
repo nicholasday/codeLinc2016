@@ -83,11 +83,11 @@
             <label for="description" class="sr-only">Description</label>
             <input name="description" type="text" id="description" class="form-control" placeholder="Description" required>
            <label for="hours" class="sr-only">Hours</label>
-            <input name="hours" type="text" id="hours" class="form-control" placeholder="Hours Offered" required>
+            <input name="hours" type="text" id="hours" class="form-control" placeholder="12" required>
             <label for="date" class="sr-only">Date</label>
-            <input name="date" type="text" id="date" class="form-control" placeholder="Date" required>
+            <input name="date" type="text" id="date" class="form-control" value="{{today.strftime("%Y-%m-%d")}}" placeholder="Date" required>
             <label for="time" class="sr-only">Time</label>
-            <input name="time" type="text" id="description" class="form-control" placeholder="Times" required>
+            <input name="time" type="text" id="description" class="form-control" placeholder="Time: 12PM-1AM" required>
             <label for="location" class="sr-only">Location</label>
             <input name="location" type="text" id="location" class="form-control" placeholder="Location" required>
             <label for="badgename" class="sr-only">Badge Name</label>
@@ -97,26 +97,19 @@
           <div class="row placeholders">
             <div class="col-xs-6 col-sm-3 placeholder">
                <input name="badgeimage" value="/static/images/bluebadge2.png" type="radio">
-              <img  class="img-responsive" src="bluebadge2.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>JA Exploring Economics</h4>
-              <span class="text-muted">50 Hours</span>
+              <img  class="img-responsive" src="/static/images/bluebadge2.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
             </div>
             <div class="col-xs-6 col-sm-3 placeholder">
                <input name="badgeimage" value="/static/images/greenbadge2.png" type="radio">
-              <img class="img-responsive" src="greenbadge2.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>New Milestone!</h4>
-              <span class="text-muted">10 Opportunities Completed</span>
+              <img class="img-responsive" src="/static/images/greenbadge2.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
             </div>
             <div class="col-xs-6 col-sm-3 placeholder">
                <input name="badgeimage" value="/static/images/purplebadge2.png" type="radio">
-              <img class="img-responsive" src="purplebadge2.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>JA Our City - Fourth Grade</h4>
+              <img class="img-responsive" src="/static/images/purplebadge2.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
             </div>
             <div class="col-xs-6 col-sm-3 placeholder">
                <input name="badgeimage" value="/static/images/orangebadge2.png" type="radio">
-              <img class="img-responsive" src="orangebadge3.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>New Milestone!</h4>
-              <span class="text-muted">First Opportunity Completed</span>
+              <img class="img-responsive" src="/static/images/orangebadge3.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
             </div>
           </div>
 
@@ -138,91 +131,44 @@
         <th>Badge Image</th>
         <th>Delete</th>
     </tr>
-
+{% for opportunity in opportunities %}
 <tr>
-    <td>1</td>
-    <td>j</td>
-    <td>j</td>
-    <td>9</td>
-    <td>2016-10-23 00:00:00</td>
-    <td>12PM - 3PM</td>
-    <th>lfg
-    </th><td>j</td>
-    <td>/static/images/greenbadge2.png</td>
-    <td><a href="http://127.0.0.1:5000/admin/delete/1">delete</a></td>
+    <td>{{ opportunity.id }}</td>
+    <td>{{ opportunity.name }}</td>
+    <td>{{ opportunity.description }}</td>
+    <td>{{ opportunity.hours }}</td>
+    <td>{{ opportunity.date }}</td>
+    <td>{{ opportunity.time }}</td>
+    <th>{{ opportunity.location }}</td>
+    <td>{{ opportunity.badge_name }}</td>
+    <td>{{ opportunity.badge_image }}</td>
+    <td><a href="/admin/delete/{{ opportunity.id }}">delete</a></td>
 </tr>
-
-<tr>
-    <td>2</td>
-    <td>jj</td>
-    <td>jj</td>
-    <td>99</td>
-    <td>2016-10-22 00:00:00</td>
-    <td>jj</td>
-    <th>jj
-    </th><td>jj</td>
-    <td>/static/images/greenbadge2.png</td>
-    <td><a href="http://127.0.0.1:5000/admin/delete/2">delete</a></td>
-</tr>
-
-<tr>
-    <td>3</td>
-    <td>j3</td>
-    <td>j3</td>
-    <td>3</td>
-    <td>2016-10-22 00:00:00</td>
-    <td>j3</td>
-    <th>j3
-    </th><td>j3</td>
-    <td>/static/images/orangebadge3.png</td>
-    <td><a href="http://127.0.0.1:5000/admin/delete/3">delete</a></td>
-</tr>
-
-<tr>
-    <td>4</td>
-    <td>j4</td>
-    <td>j4</td>
-    <td>4</td>
-    <td>2016-10-21 00:00:00</td>
-    <td>j4</td>
-    <th>j4
-    </th><td>j4</td>
-    <td>/static/images/greenbadge2.png</td>
-    <td><a href="http://127.0.0.1:5000/admin/delete/4">delete</a></td>
-</tr>
-
+{% endfor %}
 </tbody></table>
+
           </div>
           <h2 class="sub-header">Verify Opportunities</h2>
           <div class="table-responsive">
             <table class="table table-striped">
-    <tbody><tr>
-        <th>ID</th>
+    <tbody>
+    <tr>
         <th>Name</th>
         <th>Opportunity</th>
         <th>Verify</th>
     </tr>
 
-
-
+{% for opportunity in opportunities %}
+{% for userop in opportunity.userops %}
+{% if userop.verified == false %}
 <tr>
-    <td></td>
-    <td>Varun Nair</td>
-    <td>j</td>
-    <td><a href="http://127.0.0.1:5000/verify/2/1">Verify</a></td>
+    <td>{{ userop.user.firstname }} {{userop.user.lastname}}</td>
+    <td>{{ opportunity.name }}</td>
+    <td><a href="/verify/{{userop.user.id}}/{{opportunity.id}}">Verify</a></td>
 </tr>
-
-
-
-
-
-
-
-
-
-
-
-
+{% endif %}
+{% endfor %}
+{% endfor %}
 
 </tbody></table>
           </div>
