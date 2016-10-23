@@ -20,9 +20,11 @@
         <th>Description</th>
         <th>Hours</th>
         <th>Date</th>
+        <th>Time</th>
+        <th>Location</th>
         <th>Badge Name</th>
         <th>Badge Image</th>
-        <th>Complete</th>
+        <th>Delete</th>
     </tr>
 {% for opportunity in opportunities %}
 <tr>
@@ -31,9 +33,11 @@
     <td>{{ opportunity.description }}</td>
     <td>{{ opportunity.hours }}</td>
     <td>{{ opportunity.date }}</td>
+    <td>{{ opportunity.time }}</td>
+    <th>{{ opportunity.location }}</td>
     <td>{{ opportunity.badge_name }}</td>
     <td>{{ opportunity.badge_image }}</td>
-    <td><a href="/complete/{{ opportunity.id }}">complete</a></td>
+    <td><a href="/admin/delete/{{ opportunity.id }}">delete</a></td>
 </tr>
 {% endfor %}
 </table>

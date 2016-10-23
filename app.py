@@ -72,17 +72,31 @@ class Opportunity(db.Model):
     name = db.Column(db.String(100))
     description = db.Column(db.String(1000))
     date = db.Column(db.DateTime)
+    time = db.Column(db.String(50))
+    location = db.Column(db.String(100))
 
-    def __init__(self, name, description, hours, date, badge_name, badge_image):
+    def __init__(self, name, description, hours, date, time, location, badge_name, badge_image):
         self.name = name
         self.description = description
         self.hours = hours
         self.date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
+        self.time = time
+        self.location = location
         self.badge_name = badge_name
         self.badge_image = badge_image
 
     def __repr__(self):
         return '<Opportunity %r>' % self.name
+
+class Verified(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer)
+    opportunity_id = db.Column(db.Integer)
+    verified = db.Column(db.Boolean)
+
+    def __init__(self, user_id, opportunity_id):
+        self.user_id = user_id
+        self.opportunity_id = opportunity_id
 
 class Opportunity2():
     badge_name = ""
@@ -137,7 +151,7 @@ def logout():
 @app.route('/', methods=['GET', 'POST'])
 def home():
     user = current_user
-    if user.is_authenticated():
+    if user.is_authenticated:
         badges_opportunity = []
         hours = 0
         for opportunity in user.opportunities:
@@ -154,7 +168,8 @@ def home():
         opportunities = Opportunity.query.all()
 
         score = 5 * len(badges_opportunity) + 10 * hours + 20 * len(badges)
-    return render_template("home.html", score=score, badges_opportunity=badges_opportunity, hours=hours, badges=badges, opportunities=opportunities)
+        return render_template("LoggedInHome.html", score=score, badges_opportunity=badges_opportunity, hours=hours, badges=badges, opportunities=opportunities)
+    return render_template("NotLoggedInHome2.html") 
 
 @app.route('/complete/<int:opp_id>')
 def complete(opp_id):
@@ -182,7 +197,8 @@ def admin():
     if user.is_admin():
         if request.method == 'POST':
             r = request.form
-            opportunity = Opportunity(r['name2'], r['description'], int(r['hours']), r['date'], r['badgename'], r['badgeimage'])
+            opportunity = Opportunity(r['name2'], r['description'],
+                    int(r['hours']), r['date'], r['time'], r['location'], r['badgename'], r['badgeimage'])
             db.session.add(opportunity)
             db.session.commit()
             flash("Opportunity added.")
