@@ -88,6 +88,12 @@
           <h1 class="page-header">Volunteer Dashboard</h1>
 
           <div class="row placeholders">
+          {% for opportunity in badges %}
+            <div class="col-xs-6 col-sm-3 placeholder">
+                <img src="{{ opportunity.badge_image }}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                <h4>{{ opportunity.badge_name}}</h4>
+            </div>
+            {% endfor %}
 
             <div class="col-xs-6 col-sm-3 placeholder">
               <img src="..\static\images\bluebadge2.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
@@ -125,14 +131,41 @@
               </thead>
               <tbody>
                   {% for opportunity in opportunities %}
-                  <tr>
-                      <td>{{ opportunity.date.strftime("%m/%d/%Y") }}</td>
-                      <td>{{ opportunity.name }}</td>
-                      <td>{{ opportunity.time }}</td>
-                      <td>{{ opportunity.location }}</td>
-                      <td><a href="/complete/{{ opportunity.id}}">Sign-up</a></td>
-                   <tr>
-                    {% endfor %}
+                      {% if opportunity.date.date() >= today %}
+                      {% set vars = {'foo': True} %}
+                          {% for userop in opportunity.userops %}
+                              {% if userop.user == current_user %}
+                                    {% if vars.update({'foo': False}) %} {% endif %}
+                                  {% if userop.verified == true %}
+                                      <tr class="success">
+                                  {% else %}
+                                      <tr class="info">
+                                  {% endif %}
+                                  <td>{{ opportunity.date.strftime("%m/%d/%Y") }}</td>
+                                  <td><a href="/opportunity/{{ opportunity.id }}">{{ opportunity.name }}</a></td>
+                                  <td>{{ opportunity.time }}</td>
+                                  <td>{{ opportunity.location }}</td>
+                                  {% if userop.verified == true %}
+                                  <td></td>
+                                  {% endif %}
+                                  {% if userop.verified == false %}
+                                  <td><a href="/complete/{{
+                                          opportunity.id}}">Remove Sign-up</a></td>
+                                  {% endif %}
+                                  <tr>
+                              {% endif %}
+                          {% endfor %}
+                          {% if vars.foo %}
+                                <tr>
+                                  <td>{{ opportunity.date.strftime("%m/%d/%Y") }}</td>
+                                  <td><a href="/opportunity/{{ opportunity.id }}">{{ opportunity.name }}</a></td>
+                                  <td>{{ opportunity.time }}</td>
+                                  <td>{{ opportunity.location }}</td>
+                                  <td><a href="/complete/{{ opportunity.id}}">Sign-up</a></td>
+                                  <tr>
+                          {% endif %}
+                      {% endif %}
+                  {% endfor %}
                 <tr>
                   <td>11/1/2016</td>
                   <td>JA Economics for Success</td>
@@ -163,9 +196,46 @@
                   <th>Opportunity</th>
                   <th>Time</th>
                   <th>Location</th>
+                  <th>Sign-up</th>
                 </tr>
               </thead>
               <tbody>
+                  {% for opportunity in opportunities %}
+                      {% if opportunity.date.date() < today %}
+                      {% set vars = {'foo': True} %}
+                          {% for userop in opportunity.userops %}
+                              {% if userop.user == current_user %}
+                                    {% if vars.update({'foo': False}) %} {% endif %}
+                                  {% if userop.verified == true %}
+                                      <tr class="success">
+                                  {% else %}
+                                      <tr class="info">
+                                  {% endif %}
+                                  <td>{{ opportunity.date.strftime("%m/%d/%Y") }}</td>
+                                  <td><a href="/opportunity/{{ opportunity.id }}">{{ opportunity.name }}</a></td>
+                                  <td>{{ opportunity.time }}</td>
+                                  <td>{{ opportunity.location }}</td>
+                                  {% if userop.verified == true %}
+                                  <td></td>
+                                  {% endif %}
+                                  {% if userop.verified == false %}
+                                  <td><a href="/complete/{{
+                                          opportunity.id}}">Remove Sign-up</a></td>
+                                  {% endif %}
+                                  <tr>
+                              {% endif %}
+                          {% endfor %}
+                          {% if vars.foo %}
+                                <tr>
+                                  <td>{{ opportunity.date.strftime("%m/%d/%Y") }}</td>
+                                  <td><a href="/opportunity/{{ opportunity.id }}">{{ opportunity.name }}</a></td>
+                                  <td>{{ opportunity.time }}</td>
+                                  <td>{{ opportunity.location }}</td>
+                                  <td><a href="/complete/{{ opportunity.id}}">Sign-up</a></td>
+                                  <tr>
+                          {% endif %}
+                      {% endif %}
+                  {% endfor %}
                 <tr>
                   <td>10/17/2016</td>
                   <td>JA Economics for Success</td>
@@ -173,7 +243,7 @@
                   <td>Junior Achievement of the Triad</td>
                 </tr>
                 <tr>
-                  <td>>10/3/2016</td>
+                  <td>10/3/2016</td>
                   <td>JA Our Nation - Fifth Grade</td>
                   <td>8:30 AM - 11:00 AM</td>
                   <td>Junior Achievement of the Triad</td>
@@ -189,7 +259,9 @@
           </div>
         </div>
       </div>
+
     </div>
+                                
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

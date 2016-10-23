@@ -3,6 +3,7 @@ import datetime
 import bcrypt
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.associationproxy import association_proxy
 import os
 
 app = Flask(__name__)
@@ -14,10 +15,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 
 db = SQLAlchemy(app)
 
-ops = db.Table('ops',
-    db.Column('opportunity', db.Integer, db.ForeignKey('opportunity.id')),
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
-)
+#ops = db.Table('ops',
+#    db.Column('opportunity', db.Integer, db.ForeignKey('opportunity.id')),
+#    db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
+#)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -25,14 +26,16 @@ class User(db.Model):
     lastname = db.Column(db.String(500))
     email = db.Column(db.String(120), unique=True)
     pw_hash = db.Column(db.String(500))
-    opportunities = db.relationship('Opportunity', secondary=ops,
-        backref=db.backref('users', lazy='dynamic'))
+    group = db.Column(db.String(500))
+    opportunities = association_proxy("userops", "opportunity",
+                    creator=lambda userops: UserOpportunity(opportunity=userops))
 
-    def __init__(self, firstname, lastname, email, password):
+    def __init__(self, firstname, lastname, email, password, group):
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
         self.pw_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        self.group = group
 
     def __repr__(self):
         return '<User %r>' % self.email
@@ -74,6 +77,8 @@ class Opportunity(db.Model):
     date = db.Column(db.DateTime)
     time = db.Column(db.String(50))
     location = db.Column(db.String(100))
+    users = association_proxy("userops", "user",
+                    creator=lambda userops: UserOpportunity(user=userops))
 
     def __init__(self, name, description, hours, date, time, location, badge_name, badge_image):
         self.name = name
@@ -87,6 +92,21 @@ class Opportunity(db.Model):
 
     def __repr__(self):
         return '<Opportunity %r>' % self.name
+
+class UserOpportunity(db.Model):
+    __tablename__ = 'user_opportunity'
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    opportunity_id = db.Column(db.Integer, db.ForeignKey('opportunity.id'), primary_key=True)
+    verified = db.Column(db.Boolean)
+
+    opportunity = db.relationship(Opportunity, backref=db.backref("userops", cascade="all, delete, delete-orphan"))
+    user = db.relationship(User, backref=db.backref("userops", cascade="all, delete, delete-orphan"))
+
+    def __init__(self, user=None, opportunity=None, verified=False):
+        self.user = user
+        self.opportunity = opportunity
+        self.verified = verified
 
 class Verified(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -134,7 +154,7 @@ def login():
 def register():
     if request.method == 'POST':
         r = request.form
-        user = User(r['firstname'], r['lastname'], r['email'], r['password'])
+        user = User(r['firstname'], r['lastname'], r['email'], r['password'], r['group'])
         db.session.add(user)
         db.session.commit()
         login_user(user)
@@ -148,15 +168,21 @@ def logout():
     logout_user()
     return redirect(url_for("home"))
 
+@app.route('/opportunity/<int:opp_id>')
+def opportunity_view(opp_id):
+    opportunity = Opportunity.query.filter_by(id=opp_id).first()
+    return render_template("opportunity.html", opportunity=opportunity)
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     user = current_user
     if user.is_authenticated:
         badges_opportunity = []
         hours = 0
-        for opportunity in user.opportunities:
-            badges_opportunity.append(opportunity)
-            hours += opportunity.hours
+        for userop in user.userops:
+            if userop.verified:
+                badges_opportunity.append(userop.opportunity)
+                hours += userop.opportunity.hours
 
         badges = badges_opportunity[:]
         
@@ -168,8 +194,22 @@ def home():
         opportunities = Opportunity.query.all()
 
         score = 5 * len(badges_opportunity) + 10 * hours + 20 * len(badges)
-        return render_template("LoggedInHome.html", score=score, badges_opportunity=badges_opportunity, hours=hours, badges=badges, opportunities=opportunities)
+        today = datetime.date.today()
+        return render_template("LoggedInHome.html", today=today, score=score, badges_opportunity=badges_opportunity, hours=hours, badges=badges, opportunities=opportunities)
     return render_template("NotLoggedInHome2.html") 
+
+@app.route('/verify/<int:user_id>/<int:opp_id>')
+@login_required
+def verify(user_id, opp_id):
+    user = current_user
+    if user.is_admin():
+        opportunity = Opportunity.query.filter_by(id=opp_id).first()
+        user2 = User.query.filter_by(id=user_id).first()
+        for userop in user2.userops:
+            if userop.opportunity == opportunity:
+                userop.verified = True
+        db.session.commit()
+        return redirect(url_for("admin"))
 
 @app.route('/complete/<int:opp_id>')
 def complete(opp_id):
@@ -204,7 +244,7 @@ def admin():
             flash("Opportunity added.")
             return redirect(url_for("admin"))
         else:
-            return render_template("admin.html", today=today, users=users, opportunities=opportunities)
+            return render_template("unconnectedadmin.html", today=today, users=users, opportunities=opportunities)
     else:
         flash("You are not an admin.")
         return redirect(url_for("home"))

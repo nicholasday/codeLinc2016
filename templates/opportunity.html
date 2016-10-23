@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Opportunity</title>
+
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" />
+
+    <link href="https://www.juniorachievement.org/junior-achievement-flat-2016-theme/images/favicon.ico" rel="Shortcut Icon" />
+
+    <!-- Custom styles for this template -->
+    <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" />
+
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background: #626366; font-family: 'Raleway', sans-serif;">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <img src="../static/images/ja_favicon.png" style="width:42px; height: 42px; float: left;"/><a class="navbar-brand" href="#" style="color: white;">Inspire JA Triad</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+
+              <li><a href="#">Welcome, {{ current_user.firstname }} {{
+                      current_user.lastname}}</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="/logout">Sign Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid" style="font-family: 'Raleway', sans-serif;">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar" style="background: #D3D3D3;">
+          <ul class="nav nav-sidebar">
+            <li class="active" style="text-align: center;"><a href="#">Your Stats<span class="sr-only">(current)</span></a></li>
+            <span style="-moz-column-count: 2;-moz-column-gap: 50%;-webkit-column-count: 2;-webkit-column-gap: 50%;column-count: 2;column-gap: 50%;"><li style="width: 75px; height: 50px;"><a href="#">Varun</a></li><li style="width: 75px; height: 50px;><a href="#">2300</a></li></span>
+            <li><a href="#">Nick&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2100</a></li>
+            <li><a href="#">Bob&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2000</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li class="active" style="text-align: center;"><a href="#">JA Triad Leaderboard<span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Varun&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2300</a></li>
+            <li><a href="#">Nick&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2100</a></li>
+            <li><a href="#">Bob&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2000</a></li>
+          </ul>
+        </div>
+
+       <!--  <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active" style="text-align: center;"><a href="#">Total Hours<span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Varun&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2300</a></li>
+            <li><a href="#">Nick&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2100</a></li>
+            <li><a href="#">Bob&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2000</a></li>
+          </ul>
+        </div> -->
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Opportunity {{opportunity.name}}</h1>
+
+          <div class="row placeholders">
+
+            <div class="col-xs-6 col-sm-3 placeholder">
+                <img src="{{opportunity.badge_image}}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>{{ opportunity.badge_name }}</h4>
+              <span class="text-muted"></span>
+        </div>
+        <div class="row">
+        <h3>
+        Name: {{ opportunity.name }} <br />
+        Description: {{ opportunity.description }} <br />
+        Date: {{ opportunity.date.strftime("%m/%d/%Y") }} <br />
+        Time: {{ opportunity.time }} <br />
+        Location: {{ opportunity.location }}
+        </h3>
+        </div>
+
+          <div class="row">
+    <div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = http://127.0.0.1;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = {{opportunity.id}}; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//ja-triad.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
+        </div>
+      </div>
+
+    </div>
+                                
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="../../assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
