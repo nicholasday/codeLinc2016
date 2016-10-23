@@ -62,15 +62,15 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar" style="background: #D3D3D3;">
           <ul class="nav nav-sidebar">
-            <li class="active" style="text-align: center;"><a href="#" style="font-weight: bold;">Your Stats<span class="sr-only">(current)</span></a></li>
+            <li class="active" style="text-align: center;"><a href="#" style="font-weight: bold; background: #8cc63e;">Your Stats<span class="sr-only">(current)</span></a></li>
             <li class="text-center"><a href="#" style="font-weight: bold;"><b>Hours Completed: 70</a></li><br>
             <li class="text-center"><a href="#" style="font-weight: bold;">Opportunities Completed: 12</a></li><br>
             <li class="text-center"><a href="#" style="font-weight: bold;">Score: 2300</a></li><br>
             <li class="text-center"><a href="#" style="font-weight: bold;">Leaderboard Ranking: #1</a></li><br>          
           </ul>
           <ul class="nav nav-sidebar">
-            <li class="active" style="text-align: center;"><a href="#">JA Triad Leaderboard<span class="sr-only">(current)</span></a></li>
-            <li class="text-center"><a href="#" style="font-weight: bold;">Varun - 2300</a></li>
+            <li class="active" style="text-align: center;"><a href="#" style="font-weight: bold; background: #8cc63e;">JA Triad Leaderboard<span class="sr-only">(current)</span></a></li>
+            <li class="text-center"><img src="../static/images/trophy.png" style="width:32px; height: 32px; float: left; margin-left: 8px;"/><a href="#" style="font-weight: bold;">Varun - 2300</a></li>
             <li class="text-center"><a href="#">Nick - 2100</a></li>
             <li class="text-center"><a href="#">Bob - 2000</a></li>
           </ul>
@@ -88,12 +88,6 @@
           <h1 class="page-header">Volunteer Dashboard</h1>
 
           <div class="row placeholders">
-          {% for opportunity in badges %}
-            <div class="col-xs-6 col-sm-3 placeholder">
-                <img src="{{ opportunity.badge_image }}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-                <h4>{{ opportunity.badge_name}}</h4>
-            </div>
-            {% endfor %}
 
             <div class="col-xs-6 col-sm-3 placeholder">
               <img src="..\static\images\bluebadge2.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
