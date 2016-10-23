@@ -187,9 +187,9 @@ def home():
         badges = badges_opportunity[:]
         
         if hours > 10:
-            badges.append(Opportunity2("10 Hours!", "no link"))
+            badges.append(Opportunity2("10 Hours!", "/static/images/bluebadge2.png"))
         if hours > 20:
-            badges.append(Opportunity2("20 Hours!", "no link"))
+            badges.append(Opportunity2("20 Hours!", "/static/images/bluebadge2.png"))
 
         opportunities = Opportunity.query.all()
 
