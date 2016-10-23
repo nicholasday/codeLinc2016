@@ -47,9 +47,10 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Welcome, Varun Nair</a></li>
+              <li><a href="#">Welcome, {{ current_user.firstname }} {{
+                      current_user.lastname}}</a></li>
             <li><a href="#">Profile</a></li>
-            <li><a href="#">Sign Out</a></li>
+            <li><a href="/logout">Sign Out</a></li>
           </ul>
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="Search...">
@@ -81,6 +82,15 @@
           <h1 class="page-header">Volunteer Dashboard</h1>
 
           <div class="row placeholders">
+
+  {% for opportunity in badges %}
+            <div class="col-xs-6 col-sm-3 placeholder">
+                <img src="{{opportunity.badge_image}}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>{{ opportunity.badge_name }}</h4>
+              <span class="text-muted"></span>
+            </div>
+  {% endfor %}
+
             <div class="col-xs-6 col-sm-3 placeholder">
               <img src="..\static\images\bluebadge2.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
               <h4>JA Exploring Economics</h4>
@@ -112,11 +122,19 @@
                   <th>Opportunity</th>
                   <th>Time</th>
                   <th>Location</th>
-                  <th> </th>
-                  <th></th>
+                  <th>Sign-up</th>
                 </tr>
               </thead>
               <tbody>
+                  {% for opportunity in opportunities %}
+                  <tr>
+                      <td>{{ opportunity.date.strftime("%m/%d/%Y") }}</td>
+                      <td>{{ opportunity.name }}</td>
+                      <td>{{ opportunity.time }}</td>
+                      <td>{{ opportunity.location }}</td>
+                      <td><a href="/complete/{{ opportunity.id}}">Sign-up</a></td>
+                   <tr>
+                    {% endfor %}
                 <tr>
                   <td>11/1/2016</td>
                   <td>JA Economics for Success</td>
