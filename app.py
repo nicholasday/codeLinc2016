@@ -177,6 +177,9 @@ def opportunity_view(opp_id):
 def home():
     user = current_user
     if user.is_authenticated:
+        if user.is_admin():
+            return redirect(url_for("admin"))
+
         badges_opportunity = []
         hours = 0
         for userop in user.userops:

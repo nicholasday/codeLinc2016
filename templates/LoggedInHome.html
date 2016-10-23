@@ -88,29 +88,13 @@
           <h1 class="page-header">Volunteer Dashboard</h1>
 
           <div class="row placeholders">
-
+              {% for opportunity in badges %}
             <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="..\static\images\bluebadge2.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>JA Exploring Economics</h4>
-              <span class="text-muted">50 Hours</span>
+                <img src="{{ opportunity.badge_image }}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                <h4>{{ opportunity.name }}</h4>
             </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="..\static\images\greenbadge2.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>New Milestone!</h4>
-              <span class="text-muted">10 Opportunities Completed</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="..\static\images\purplebadge2.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>JA Our City - Fourth Grade</h4>
-              <span class="text-muted">30 Hours</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="..\static\images\orangebadge3.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>New Milestone!</h4>
-              <span class="text-muted">First Opportunity Completed</span>
-            </div>
-          </div>
-
+            {% endfor %}
+         </div>
           <h2 class="sub-header">Upcoming Opportunities</h2>
           <div class="table-responsive">
             <table class="table table-striped">
