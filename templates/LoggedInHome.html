@@ -127,13 +127,20 @@
               </thead>
               <tbody>
                   {% for opportunity in opportunities %}
-                  <tr>
+                      {% if opportunity.date.date() < today %}
+                   {{ opportunity.userops.verified }}
+                   {% if opportunity.userops.verified == true %}
+                  <tr class=".success">
+                    {% else %}
+                    <tr>
+                        {% endif %}
                       <td>{{ opportunity.date.strftime("%m/%d/%Y") }}</td>
                       <td>{{ opportunity.name }}</td>
                       <td>{{ opportunity.time }}</td>
                       <td>{{ opportunity.location }}</td>
                       <td><a href="/complete/{{ opportunity.id}}">Sign-up</a></td>
                    <tr>
+                       {% endif %}
                     {% endfor %}
                 <tr>
                   <td>11/1/2016</td>
@@ -168,6 +175,21 @@
                 </tr>
               </thead>
               <tbody>
+                  {% for opportunity in opportunities %}
+                      {% if opportunity.date.date() < today %}
+                   {% if opportunity.userops.verified == true %}
+                  <tr class=".success">
+                    {% else %}
+                    <tr>
+                        {% endif %}
+                      <td>{{ opportunity.date.strftime("%m/%d/%Y") }}</td>
+                      <td>{{ opportunity.name }}</td>
+                      <td>{{ opportunity.time }}</td>
+                      <td>{{ opportunity.location }}</td>
+                      <td><a href="/complete/{{ opportunity.id}}">Sign-up</a></td>
+                   <tr>
+                       {% endif %}
+                    {% endfor %}
                 <tr>
                   <td>10/17/2016</td>
                   <td>JA Economics for Success</td>

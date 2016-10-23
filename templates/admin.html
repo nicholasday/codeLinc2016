@@ -80,12 +80,14 @@
     </tr>
 {% for opportunity in opportunities %}
 {% for userop in opportunity.userops %}
+{% if userop.verified == false %}
 <tr>
     <td>{{ userop.id }}</td>
     <td>{{ userop.user.firstname }} {{userop.user.lastname}}</td>
     <td>{{ opportunity.name }}</td>
     <td><a href="/verify/{{userop.user.id}}/{{opportunity.id}}">Verify</a></td>
 </tr>
+{% endif %}
 {% endfor %}
 {% endfor %}
 </table>

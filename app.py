@@ -26,14 +26,16 @@ class User(db.Model):
     lastname = db.Column(db.String(500))
     email = db.Column(db.String(120), unique=True)
     pw_hash = db.Column(db.String(500))
+    group = db.Column(db.String(500))
     opportunities = association_proxy("userops", "opportunity",
                     creator=lambda userops: UserOpportunity(opportunity=userops))
 
-    def __init__(self, firstname, lastname, email, password):
+    def __init__(self, firstname, lastname, email, password, group):
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
         self.pw_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        self.group = group
 
     def __repr__(self):
         return '<User %r>' % self.email
@@ -152,7 +154,7 @@ def login():
 def register():
     if request.method == 'POST':
         r = request.form
-        user = User(r['firstname'], r['lastname'], r['email'], r['password'])
+        user = User(r['firstname'], r['lastname'], r['email'], r['password'], r['group'])
         db.session.add(user)
         db.session.commit()
         login_user(user)
@@ -187,7 +189,8 @@ def home():
         opportunities = Opportunity.query.all()
 
         score = 5 * len(badges_opportunity) + 10 * hours + 20 * len(badges)
-        return render_template("LoggedInHome.html", score=score, badges_opportunity=badges_opportunity, hours=hours, badges=badges, opportunities=opportunities)
+        today = datetime.date.today()
+        return render_template("LoggedInHome.html", today=today, score=score, badges_opportunity=badges_opportunity, hours=hours, badges=badges, opportunities=opportunities)
     return render_template("NotLoggedInHome2.html") 
 
 @app.route('/verify/<int:user_id>/<int:opp_id>')
