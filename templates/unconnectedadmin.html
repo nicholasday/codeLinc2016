@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Administrator Dashboard</title>
+
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" />
+
+    <link href="https://www.juniorachievement.org/junior-achievement-flat-2016-theme/images/favicon.ico" rel="Shortcut Icon" />
+
+    <!-- Custom styles for this template -->
+    <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" />
+
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background: #626366; font-family: 'Raleway', sans-serif;">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#" style="color: white;">Inspire JA Triad</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#" style="color: white;">Welcome, Admin</a></li>
+            <li><a href="#" style="color: white;">Sign Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid" style="font-family: 'Raleway', sans-serif;">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active" style="text-align: center;"><a href="#">JA Triad Leaderboard<span class="sr-only">(current)</span></a></li>
+            <li class="text-center"><a href="#" style="font-weight: bold;">Varun - 2300</a></li>
+            <li class="text-center"><a href="#">Nick - 2100</a></li>
+            <li class="text-center"><a href="#">Bob - 2000</a></li>
+          </ul>
+        </div>
+
+       <!--  <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active" style="text-align: center;"><a href="#">Total Hours<span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Varun&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2300</a></li>
+            <li><a href="#">Nick&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2100</a></li>
+            <li><a href="#">Bob&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2000</a></li>
+          </ul>
+        </div> -->
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Administrator Dashboard</h1>
+
+          <h2 class="sub-header">Create an Opportunity</h2>
+          <form class="form-signin" action="" method=post>
+            <label for="name2" class="sr-only">Name</label>
+            <input name="name2" type="text" id="name2" class="form-control" placeholder="Opportunity Name" required autofocus>
+            <label for="description" class="sr-only">Description</label>
+            <input name="description" type="text" id="description" class="form-control" placeholder="Description" required>
+           <label for="hours" class="sr-only">Hours</label>
+            <input name="hours" type="text" id="hours" class="form-control" placeholder="Hours Offered" required>
+            <label for="date" class="sr-only">Date</label>
+            <input name="date" type="text" id="date" class="form-control" placeholder="Date" required>
+            <label for="time" class="sr-only">Time</label>
+            <input name="time" type="text" id="description" class="form-control" placeholder="Times" required>
+            <label for="location" class="sr-only">Location</label>
+            <input name="location" type="text" id="location" class="form-control" placeholder="Location" required>
+            <label for="badgename" class="sr-only">Badge Name</label>
+            <input name="badgename" type="text" id="badgename" class="form-control" placeholder="Badge Name" required>
+
+          <h4 class="sub-header">Choose a Badge</h3>
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3 placeholder">
+               <input name="badgeimage" value="/static/images/bluebadge2.png" type="radio">
+              <img  class="img-responsive" src="bluebadge2.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>JA Exploring Economics</h4>
+              <span class="text-muted">50 Hours</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+               <input name="badgeimage" value="/static/images/greenbadge2.png" type="radio">
+              <img class="img-responsive" src="greenbadge2.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>New Milestone!</h4>
+              <span class="text-muted">10 Opportunities Completed</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+               <input name="badgeimage" value="/static/images/purplebadge2.png" type="radio">
+              <img class="img-responsive" src="purplebadge2.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>JA Our City - Fourth Grade</h4>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+               <input name="badgeimage" value="/static/images/orangebadge2.png" type="radio">
+              <img class="img-responsive" src="orangebadge3.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>New Milestone!</h4>
+              <span class="text-muted">First Opportunity Completed</span>
+            </div>
+          </div>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit" value="submit" style="background: #8cc63e">Create</button>
+          </form>
+
+          <h2 class="sub-header">All Opportunities</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+         <tbody><tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Hours</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Location</th>
+        <th>Badge Name</th>
+        <th>Badge Image</th>
+        <th>Delete</th>
+    </tr>
+
+<tr>
+    <td>1</td>
+    <td>j</td>
+    <td>j</td>
+    <td>9</td>
+    <td>2016-10-23 00:00:00</td>
+    <td>12PM - 3PM</td>
+    <th>lfg
+    </th><td>j</td>
+    <td>/static/images/greenbadge2.png</td>
+    <td><a href="http://127.0.0.1:5000/admin/delete/1">delete</a></td>
+</tr>
+
+<tr>
+    <td>2</td>
+    <td>jj</td>
+    <td>jj</td>
+    <td>99</td>
+    <td>2016-10-22 00:00:00</td>
+    <td>jj</td>
+    <th>jj
+    </th><td>jj</td>
+    <td>/static/images/greenbadge2.png</td>
+    <td><a href="http://127.0.0.1:5000/admin/delete/2">delete</a></td>
+</tr>
+
+<tr>
+    <td>3</td>
+    <td>j3</td>
+    <td>j3</td>
+    <td>3</td>
+    <td>2016-10-22 00:00:00</td>
+    <td>j3</td>
+    <th>j3
+    </th><td>j3</td>
+    <td>/static/images/orangebadge3.png</td>
+    <td><a href="http://127.0.0.1:5000/admin/delete/3">delete</a></td>
+</tr>
+
+<tr>
+    <td>4</td>
+    <td>j4</td>
+    <td>j4</td>
+    <td>4</td>
+    <td>2016-10-21 00:00:00</td>
+    <td>j4</td>
+    <th>j4
+    </th><td>j4</td>
+    <td>/static/images/greenbadge2.png</td>
+    <td><a href="http://127.0.0.1:5000/admin/delete/4">delete</a></td>
+</tr>
+
+</tbody></table>
+          </div>
+          <h2 class="sub-header">Verify Opportunities</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+    <tbody><tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Opportunity</th>
+        <th>Verify</th>
+    </tr>
+
+
+
+<tr>
+    <td></td>
+    <td>Varun Nair</td>
+    <td>j</td>
+    <td><a href="http://127.0.0.1:5000/verify/2/1">Verify</a></td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="../../assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
