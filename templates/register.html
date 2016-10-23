@@ -1,17 +1,75 @@
-{% extends "base.html" %}
-{% block body %}
-<h1>Register</h1>
-<form action="{{ url_for('register') }}" method=post>
-    First Name:
-    <input type=text name=firstname>
-    Last Name:
-    <input type=text name=lastname>
-    Email:
-    <input type=text name=email>
-    Group:
-    <input type=text name=group>
-    Password:
-    <input type=password name=password>
-    <input type="submit" value="Submit">
-</form>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Register</title>
+
+    <!-- Custom styles for this template -->
+    <link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" />
+
+    <link href="https://www.juniorachievement.org/junior-achievement-flat-2016-theme/images/favicon.ico" rel="Shortcut Icon" />
+
+    <!-- Custom styles for this template -->
+    <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" />
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body style="background: #D3D3D3; font-family: 'Raleway', sans-serif; display: flex;">
+
+    <div class="container" style="text-align: center; width: 100%; display: block; margin: auto;">
+
+    <img src="../static/images/jatriadlogo.png" style="width: 200px; height: 100px;">
+      <form class="form-signin" action="{{ url_for('register') }}" method=post>
+        <h2 class="form-signin-heading" style="text-align: center;">Register</h2>
+        <label for="firstName" class="sr-only">First Name</label>
+        <input name="firstname" type="text" id="firstName" class="form-control" placeholder="Joe" required autofocus>
+        <label for="lastName" class="sr-only">Last Name</label>
+        <input name="lastname" type="text" id="lastName" class="form-control" placeholder="Smith" required>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <label for="group" class="sr-only">Company/Group</label>
+        <input name="group" type="text" id="group" class="form-control" placeholder="Company/Group (Lincoln Financial)">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+          <br>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" value="submit" style="background: #8cc63e">Register</button>
+      </form>
+      <br>
+      <a href="#">Forgot Password?</a>
+    </div> <!-- /container -->
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
